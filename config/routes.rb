@@ -6,9 +6,12 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   root to: "homes#top"
 
-  get 'homes/about' => "homes#about"
+  get 'homes/about' => "homes#about", as: "about"
 
-  resources :post_images, only: [:new, :create, :index, :show, :destroy]
+  resources :post_images, only: [:new, :create, :index, :show, :destroy] do
+    resource :favorite, only: [:create, :destroy]
+    resources :post_comments, only: [:create, :destroy]
+  end
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
